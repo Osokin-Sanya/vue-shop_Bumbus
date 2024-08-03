@@ -6,14 +6,10 @@
 
       <div class="text-sm text-gray-500">Вартість доставки {{ deliveryCost }} ₴</div>
     </div>
+
     <button
-      :disabled="!fieldsFilled"
       @click="submitOrder"
-      :class="
-        fieldsFilled
-          ? 'py-2 pointer px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 '
-          : 'py-2 text-black pointer px-4 bg-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 bg-gray-300 cursor-not-allowed'
-      "
+      class="py-2 pointer px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 '"
     >
       Замовлення підтверджую
     </button>
@@ -25,9 +21,10 @@ import { calculateTotalPrice } from '@/utils/utils'
 import { computed, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 
-defineProps({
+const props = defineProps({
   fieldsFilled: Boolean,
-  openPopup: Function
+  openPopup: Function,
+  checkFieldsAndScroll: Function
 })
 
 const emit = defineEmits(['open-popup'])
@@ -47,6 +44,9 @@ watchEffect(() => {
 })
 
 const submitOrder = () => {
-  emit('open-popup')
+  props.checkFieldsAndScroll()
+  if (props.fieldsFilled) {
+    emit('open-popup')
+  }
 }
 </script>

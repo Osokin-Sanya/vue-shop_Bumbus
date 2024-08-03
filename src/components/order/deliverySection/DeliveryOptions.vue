@@ -9,12 +9,12 @@
         @click="$emit('select', option.value, option.label, option.price)"
         class="mr-2"
       />
+
       <label :for="option.value" class="mr-2">{{ option.label }}</label>
       <span class="text-gray-500">{{ option.price }} ₴</span>
     </div>
   </div>
 </template>
-
 <script setup>
 defineProps({
   options: Array,

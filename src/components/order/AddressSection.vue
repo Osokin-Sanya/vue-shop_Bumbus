@@ -1,7 +1,9 @@
 <template>
   <section class="mb-6">
-    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Адреса</h2>
-
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Адреса</h2>
+      <p class="text-red-400 text-2xl ml-2 font-semibold mb-4">*</p>
+    </div>
     <div>
       <div class="flex justify-between items-center border-b pb-2">
         <div class="text-lg text-gray-700">
@@ -9,13 +11,7 @@
         </div>
         <button @click="editAddress" class="text-blue-600 hover:underline">Змінити</button>
       </div>
-      <div
-        v-if="!fieldsAddress"
-        class="p-2 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-lg flex justify-between items-center"
-        :class="{ hidden: editMode }"
-      >
-        Заповніть адресу
-      </div>
+
       <div v-if="isEditingAddress" class="flex flex-col gap-4 mt-4">
         <input
           @input="debouncedSearchOnCity"
@@ -37,8 +33,9 @@
         </ul>
 
         <button
+          v-if="!editMode"
           @click="saveAddress"
-          class="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+          class="py-2 px-4 bg-green-600 font-bold text-white rounded-lg hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600"
         >
           Зберегти
         </button>
@@ -65,7 +62,7 @@ const order = computed(() => store.getters['order/getOrder'])
 
 const emit = defineEmits(['update:fieldsAddress'])
 
-const isEditingAddress = ref(false)
+const isEditingAddress = ref(true)
 const cities = ref([])
 
 watchEffect(() => {
@@ -97,7 +94,9 @@ const editAddress = () => {
 }
 
 const saveAddress = () => {
-  isEditingAddress.value = false
+  if (address.value.city && address.value.region) {
+    isEditingAddress.value = false
+  }
 }
 
 const searchCity = async (event) => {
@@ -117,4 +116,10 @@ const selectCity = (city) => {
 
   emit('update:fieldsAddress', true)
 }
+
+document.addEventListener('click', () => {
+  if (cities.value.length > 0) {
+    cities.value = []
+  }
+})
 </script>

@@ -59,6 +59,7 @@ const updateFilters = async () => {
     searchQuery: searchQuery.value
   }
   await store.dispatch('filters/updateFilters', filters)
+  await store.dispatch('items/setUpdateItemsStatus')
 }
 
 watch(user, (newVuelue) => {

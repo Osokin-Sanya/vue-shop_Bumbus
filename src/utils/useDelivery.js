@@ -10,7 +10,7 @@ export function useDelivery(store) {
   const editMode = computed(() => store.getters['order/getOrderMode'])
 
   const selectedOption = ref('')
-  const isEditingDelivery = ref(false)
+  const isEditingDelivery = ref(true)
 
   const resetDelivery = (isEdit = false) => {
     const baseDelivery = {
@@ -40,6 +40,10 @@ export function useDelivery(store) {
 
   watchEffect(() => {
     resetDelivery(order.value && editMode.value)
+  })
+
+  watchEffect(() => {
+    console.log(order.value)
   })
 
   watchEffect(() => {

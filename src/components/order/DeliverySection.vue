@@ -1,6 +1,10 @@
 <template>
   <section class="mb-6">
-    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Доставка</h2>
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Доставка</h2>
+      <p class="text-red-400 text-2xl ml-2 font-semibold mb-4">*</p>
+    </div>
+
     <DeliveryInfo :delivery="delivery" @edit="editDelivery" />
 
     <DeliveryOptions
@@ -23,22 +27,13 @@
         class="mt-1 block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       ></textarea>
     </div>
-    <div
-      v-if="!fieldsDelivery && !editMode"
-      class="p-2 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-lg flex justify-between items-center"
-    >
-      Заповніть інформацію про доставку
-    </div>
-    <div
-      v-if="editMode && confirmFields"
-      class="p-2 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-lg flex justify-between items-center"
-    >
-      <div>Пiдтвердіть актуальність полiв</div>
+
+    <div v-if="editMode && confirmFields" class="mt-4">
       <button
         @click="confirm"
-        class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
       >
-        Підтвердити
+        Пiдтвердити актуальність полiв
       </button>
     </div>
   </section>
@@ -120,7 +115,6 @@ watchEffect(() => {
 
 const editDelivery = () => {
   isEditingDelivery.value = !isEditingDelivery.value
-  confirmFields.value = false
 }
 
 const confirm = () => {
@@ -154,4 +148,12 @@ watch(
   },
   { deep: true }
 )
+
+document.addEventListener('click', () => {
+  if (novaPoshtaDepartments.value.length > 0) {
+    novaPoshtaDepartments.value = []
+  } else if (streets.value.length > 0) {
+    streets.value = []
+  }
+})
 </script>

@@ -30,10 +30,14 @@
             class="bg-gray-100 text-gray-700 px-2 py-1 border-t border-b border-gray-300 w-full text-center"
           ></div>
           <button
+            :disabled="item.amount === 1"
             @click="decreaseAmount(item)"
-            class="bg-[#81AFF6] text-white rounded-b-lg px-2 py-1 hover:bg-blue-600 transition-colors"
+            :class="[
+              'bg-[#81AFF6]  text-white rounded-b-lg px-2 py-1 transition-colors',
+              item.amount > 1 ? 'hover:bg-blue-600' : 'bg-[rgb(147,162,185)]'
+            ]"
           >
-            <img class="w-5 h-5" src="../../../public/down-arrow.svg " alt="" />
+            <img class="w-5 h-5" src="../../../public/down-arrow.svg" alt="" />
           </button>
         </div>
       </div>
@@ -42,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import LoadingSpinner from '../LoadingSpinner.vue'
 
@@ -50,7 +54,6 @@ const store = useStore()
 const editMode = computed(() => store.getters['order/getOrderMode'])
 const order = computed(() => store.getters['order/getOrder'])
 const getBasket = computed(() => store.getters['basket/getBasketItems'])
-const getBasketItems = computed(() => store.getters['basket/getBasketItems'])
 
 const itemsBasket = ref([])
 const orderItems = ref([])
@@ -76,7 +79,6 @@ const decreaseAmount = (item) => {
 }
 
 watchEffect(async () => {
-  console.log(getBasket.value)
   if (order.value?.products?.length > 0 && editMode.value) {
     itemsBasket.value = order.value.products
   } else {

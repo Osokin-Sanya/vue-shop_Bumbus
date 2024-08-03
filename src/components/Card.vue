@@ -4,7 +4,7 @@
   >
     <img
       v-show="user"
-      class="absolute top-8 left-8 cursor-pointer border-[1px] border-[#eeeeee] rounded-[10px]"
+      class="absolute top-8 left-8 cursor-pointer border-[1px] hover:border-[rgb(255,93,141)] rounded-[10px] hover:shadow-xl duration-300 hover:scale-110 hover:border-[#a3a3a3]"
       :src="!isFavorite ? '/like-1.svg' : '/like-2.svg'"
       alt="like"
       @click="handleClickToFavorite"
@@ -20,13 +20,17 @@
         <span class="text-slate-400">Ціна</span>
         <b>{{ price }}</b>
       </div>
-      <img
-        v-show="user"
-        class="cursor-pointer"
-        @click="handleClickToCart"
-        :src="isAdded ? '/checked.svg' : '/plus.svg'"
-        alt="plus"
-      />
+      <div
+        class="hover:shadow-2xl duration-300 hover:scale-110 hover:border-[rgb(175,255,0)] flex items-end"
+      >
+        <img
+          v-show="user"
+          class="cursor-pointer border-[1px] rounded-[10px] hover:border-[rgb(175,255,0)]"
+          @click="handleClickToCart"
+          :src="isAdded ? '/checked.svg' : '/plus.svg'"
+          alt="plus"
+        />
+      </div>
     </div>
   </div>
 </template>

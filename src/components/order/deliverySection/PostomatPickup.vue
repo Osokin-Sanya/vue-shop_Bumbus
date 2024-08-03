@@ -11,7 +11,7 @@
       class="p-2 border rounded w-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
     />
     <div v-show="!cityRef" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
-      <p>Спочатку заповніть інформацію про адресу</p>
+      <p>Спочатку виберіть місто</p>
     </div>
     <ul
       v-show="novaPoshtaDepartments?.length"

@@ -15,10 +15,18 @@
           <p class="text-3xl font-semibold text-gray-900 mb-4">{{ item.price }} грн</p>
           <div v-show="userId" class="flex justify-end gap-5">
             <button @click="handleClickToFavorite">
-              <img :src="!isFavorite ? '/like-1.svg' : '/like-2.svg'" alt="" />
+              <img
+                class="border-[1px] hover:border-[rgb(255,93,141)] rounded-[10px] hover:shadow-xl duration-300 hover:scale-110 hover:border-[#a3a3a3]"
+                :src="!isFavorite ? '/like-1.svg' : '/like-2.svg'"
+                alt=""
+              />
             </button>
             <button @click="handleClickToBasket">
-              <img :src="isBasket ? '/checked.svg' : '/plus.svg'" alt="" />
+              <img
+                class="border-[1px] rounded-[10px] hover:scale-110 hover:border-[rgb(175,255,0)]"
+                :src="isBasket ? '/checked.svg' : '/plus.svg'"
+                alt=""
+              />
             </button>
           </div>
         </div>
@@ -42,7 +50,7 @@
               @click="deleteReview(review.id)"
               class="absolute top-2 right-2 text-red-600 hover:text-red-800"
             >
-              Удалить
+              Видалити
             </button>
           </div>
         </div>

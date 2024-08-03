@@ -1,28 +1,17 @@
 <template>
   <section class="mb-6">
-    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Ваші контактні дані</h2>
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Ваші контактні дані</h2>
+      <p class="text-red-400 text-2xl ml-2 font-semibold mb-4">*</p>
+    </div>
     <div>
       <div class="flex justify-between border-b pb-2 flex-col">
         <div class="text-lg text-gray-700">{{ contact.lastName }} {{ contact.firstName }}</div>
         <div class="text-lg text-gray-700">Номер телефону: {{ contact.phone }}</div>
+        <div class="text-lg text-gray-700">Пошта: {{ contact.email }}</div>
         <button @click="editContact" class="text-blue-600 hover:underline ml-auto">Змінити</button>
       </div>
-      <div
-        v-if="!fieldsContact"
-        class="p-2 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-lg flex justify-between items-center"
-      >
-        {{
-          editMode ? 'Пiдтвердіть актуальність полiв' : 'Заповніть інформацію про контактні дані'
-        }}
-        <div v-if="editMode">
-          <button
-            @click="confirm"
-            class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            Підтвердити
-          </button>
-        </div>
-      </div>
+
       <form @submit.prevent="saveContact">
         <div v-if="isEditingContact" class="flex flex-col gap-4 mt-4">
           <input
@@ -55,9 +44,9 @@
           />
           <button
             type="submit"
-            class="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+            class="py-2 px-4 bg-green-600 font-bold text-white rounded-lg hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600"
           >
-            Зберегти
+            {{ editMode ? 'Пiдтвердіть актуальність полiв' : 'Зберегти' }}
           </button>
         </div>
       </form>
@@ -77,7 +66,7 @@ const store = useStore()
 const user = computed(() => store.getters['authorization/getUser'])
 const order = computed(() => store.getters['order/getOrder'])
 const editMode = computed(() => store.getters['order/getOrderMode'])
-const isEditingContact = ref(false)
+const isEditingContact = ref(true)
 const emit = defineEmits(['update:fieldsContact'])
 
 watchEffect(() => {
@@ -94,10 +83,6 @@ watchEffect(() => {
   }
 })
 
-const confirm = () => {
-  store.dispatch('order/setContact', contact)
-  emit('update:fieldsContact', true)
-}
 const editContact = () => {
   isEditingContact.value = !isEditingContact.value
 }
